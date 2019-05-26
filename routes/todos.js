@@ -14,4 +14,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deletedTodo = await db.removeTodo(id);
+    res.json({
+      payload: deletedTodo,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 module.exports = router;
