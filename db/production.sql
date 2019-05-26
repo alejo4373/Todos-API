@@ -7,5 +7,5 @@ CREATE TABLE todos (
   id SERIAL PRIMARY KEY,
   text VARCHAR NOT NULL,
   completed BOOLEAN DEFAULT FALSE,
-  points INT NOT NULL
+  value INT NOT NULL
 );
