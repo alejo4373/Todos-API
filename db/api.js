@@ -5,6 +5,12 @@ const optionalCol = col => ({
   skip: (col) => col.value === null || col.value === undefined || !col.exists
 })
 
+const getAllTodos = () => db.any("SELECT * FROM todos");
+const removeTodo = id => 
+  db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", 
+    { id }
+  );
+
 const updateTodo = (id, todoEdits) => {
   const columnSet = new helpers.ColumnSet([
     optionalCol("text"),
@@ -12,13 +18,13 @@ const updateTodo = (id, todoEdits) => {
     optionalCol("completed"),
   ], { table: "todos" })
 
-  const updateQuery = helpers.update(todoEdits, columnSet) + "WHERE id = $/id/ RETURNING *";
+  const updateQuery = `${helpers.update(todoEdits, columnSet)} 
+    WHERE id = $/id/ RETURNING *`;
   return db.one(updateQuery, {id})
-
 }
 
 module.exports = {
-  getAllTodos: () => db.any("SELECT * FROM todos"),
-  removeTodo: id => db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", { id }),
+  getAllTodos,
+  removeTodo,
   updateTodo
 };
