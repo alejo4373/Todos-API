@@ -27,4 +27,17 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
+router.patch('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const updatedTodo = await db.updateTodo(id, req.body);
+    res.json({
+      payload: updatedTodo,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 module.exports = router;
