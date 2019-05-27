@@ -14,6 +14,19 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const todo = await db.getTodo(id);
+    res.json({
+      payload: todo,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
   try {

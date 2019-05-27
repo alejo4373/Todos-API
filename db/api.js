@@ -6,6 +6,7 @@ const optionalCol = col => ({
 })
 
 const getAllTodos = () => db.any("SELECT * FROM todos");
+const getTodo = (id) => db.one("SELECT * FROM todos WHERE id=$/id/", { id });
 const removeTodo = id => 
   db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", 
     { id }
@@ -25,6 +26,7 @@ const updateTodo = (id, todoEdits) => {
 
 module.exports = {
   getAllTodos,
+  getTodo,
   removeTodo,
   updateTodo
 };
