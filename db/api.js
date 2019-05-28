@@ -8,7 +8,7 @@ const optionalCol = col => ({
 })
 
 const getAllTodos = () => Todos.select();
-const getTodo = (id) => db.one("SELECT * FROM todos WHERE id=$/id/", { id });
+const getTodo = id => Todos.where({id}).select().first();
 const removeTodo = id => 
   db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", 
     { id }
