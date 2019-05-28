@@ -1,11 +1,13 @@
 const { db, helpers } = require("./");
+const knex = require('./');
+const Todos = knex('todos');
 
 const optionalCol = col => ({
   name: col, 
   skip: (col) => col.value === null || col.value === undefined || !col.exists
 })
 
-const getAllTodos = () => db.any("SELECT * FROM todos");
+const getAllTodos = () => Todos.select();
 const getTodo = (id) => db.one("SELECT * FROM todos WHERE id=$/id/", { id });
 const removeTodo = id => 
   db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", 
