@@ -9,10 +9,7 @@ const optionalCol = col => ({
 
 const getAllTodos = () => Todos.select();
 const getTodo = id => Todos.where({id}).select().first();
-const removeTodo = id => 
-  db.one("DELETE FROM todos WHERE id=$/id/ RETURNING *", 
-    { id }
-  );
+const removeTodo = id =>  Todos.where({id: parseInt(id)}).del().returning('*');
 
 const updateTodo = (id, todoEdits) => {
   const columnSet = new helpers.ColumnSet([
