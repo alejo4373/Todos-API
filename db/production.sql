@@ -9,3 +9,9 @@ CREATE TABLE todos (
   completed BOOLEAN DEFAULT FALSE,
   value INT NOT NULL
 );
+
+CREATE TABLE journal_entries (
+  id SERIAL PRIMARY KEY,
+  text VARCHAR NOT NULL,
+  ts TIMESTAMPTZ DEFAULT NOW() 
+);
