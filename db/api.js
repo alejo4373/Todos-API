@@ -28,10 +28,15 @@ const addJournalEntry = (entry) => {
   return db.one('INSERT INTO journal_entries(text) VALUES(${text}) RETURNING *', entry)
 }
 
+const createTag = (name) => {
+  return db.one('INSERT INTO tags(name) VALUES($1) RETURNING *', name)
+}
+
 module.exports = {
   getAllTodos,
   getTodo,
   removeTodo,
   updateTodo,
-  addJournalEntry
+  addJournalEntry,
+  createTag 
 };
