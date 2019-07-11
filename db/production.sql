@@ -15,3 +15,14 @@ CREATE TABLE journal_entries (
   text VARCHAR NOT NULL,
   ts TIMESTAMPTZ DEFAULT NOW() 
 );
+
+CREATE TABLE tags (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR (25)
+);
+
+CREATE TABLE je_tags (
+  id SERIAL PRIMARY KEY,
+  je_id INT REFERENCES journal_entries(id),
+  tag_id INT REFERENCES tags(id)
+);
