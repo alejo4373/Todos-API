@@ -25,7 +25,6 @@ const updateTodo = (id, todoEdits) => {
 }
 
 const addJournalEntry = (entry) => {
-  console.log(entry)
   return db.one('INSERT INTO journal_entries(text) VALUES(${text}) RETURNING *', entry)
 }
 
