@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/api");
 
-router.get('/', async (req, res, next) => {
+router.get('/all', async (req, res, next) => {
   try {
     const todos = await db.getAllTodos();
     res.json({
