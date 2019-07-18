@@ -14,6 +14,18 @@ router.get('/all', async (req, res, next) => {
   }
 });
 
+router.get('/new', async (req, res, next) => {
+  try {
+    const todo = await db.createTodo(req.body);
+    res.json({
+      payload: todo,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   try {
