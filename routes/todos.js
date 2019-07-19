@@ -14,7 +14,7 @@ router.get('/all', async (req, res, next) => {
   }
 });
 
-router.get('/new', async (req, res, next) => {
+router.post('/new', async (req, res, next) => {
   try {
     const todo = await db.createTodo(req.body);
     res.json({
