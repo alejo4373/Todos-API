@@ -14,4 +14,15 @@ router.post('/add', async (req, res, next) => {
   }
 })
 
+router.get('/entries', async (req, res, next) => {
+  try {
+    const journalEntries = await db.getAllJournalEntries();
+    res.json({
+      payload: journalEntries,
+      err: false
+    })
+  } catch (err) {
+    next(err);
+  }
+})
 module.exports = router;

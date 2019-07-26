@@ -50,6 +50,8 @@ const addJournalEntry = async (entry) => {
   }
 }
 
+const getAllJournalEntries = () => db.any("SELECT * FROM journal_entries");
+
 const createTag = (name) => {
   return db.one('INSERT INTO tags(name) VALUES($1) RETURNING *', name)
 }
@@ -61,5 +63,6 @@ module.exports = {
   removeTodo,
   updateTodo,
   addJournalEntry,
+  getAllJournalEntries,
   createTag 
 };
