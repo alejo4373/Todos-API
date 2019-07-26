@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "heroku-pre-build": "cd client && npm i && npm run build"
+    "heroku-prebuild": "cd client && npm i && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
