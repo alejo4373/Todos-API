@@ -25,7 +25,7 @@ CREATE TABLE je_tags (
   id SERIAL PRIMARY KEY,
   je_id INT REFERENCES journal_entries(id),
   tag_id INT REFERENCES tags(id)
-)
+);
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
