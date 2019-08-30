@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
-let { genPasswordDigest } = require('../auth/helpers');
+const passport = require('../auth/passport');
+const { genPasswordDigest, loginRequired } = require('../auth/helpers');
 let Users = require('../db/users');
 
 router.post("/signup", async (req, res, next) => {
@@ -22,6 +23,15 @@ router.post("/signup", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+})
+
+router.post("/login", passport.authenticate('local'), (req, res, next) => {
+  res.json({
+    payload: {
+      user: req.user
+    },
+    err: false
+  })
 })
 
 module.exports = router;
