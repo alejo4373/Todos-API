@@ -11,6 +11,28 @@ const createUser = async (user) => {
   }
 }
 
+const getUserByUsername = async (username) => {
+  try {
+    let user = await db.one('SELECT * FROM users WHERE username = $/username/', {
+      username
+    });
+    return user;
+  } catch (err) {
+    throw err;
+  }
+}
+
+const getUserById = async (id) => {
+  try {
+    let user = await db.one('SELECT * FROM users WHERE id = $1', id);
+    return user;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   createUser,
+  getUserByUsername,
+  getUserById
 }
