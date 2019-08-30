@@ -10,6 +10,20 @@ const genPasswordDigest = async (plainPassword) => {
   }
 }
 
+const comparePasswords = (plainPassword, passwordDigest) => { 
+  return bcrypt.compare(plainPassword, passwordDigest)
+}
+
+const loginRequired = (req, res, next) => {
+  if (req.user) return next();
+  res.status(401).json({
+    payload: false,
+    err: "Unauthorized"
+  })
+}
+
 module.exports = {
-  genPasswordDigest
+  genPasswordDigest,
+  comparePasswords,
+  loginRequired
 }
