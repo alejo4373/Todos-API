@@ -30,6 +30,6 @@ CREATE TABLE je_tags (
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR NOT NULL, 
-  password_diggest VARCHAR,
+  password_digest VARCHAR,
   points INT
 );
