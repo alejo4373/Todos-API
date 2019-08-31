@@ -43,14 +43,29 @@ router.post("/signup", async (req, res, next) => {
   }
 })
 
-router.post("/login", passport.authenticate('local'), (req, res, next) => {
-  res.json({
-    payload: {
-      user: req.user,
-      msg: "Log-in successful",
-    },
-    err: false
-  })
+router.post("/login",  (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err)
+    if (!user) {
+      res.status(401).json({
+        payload: {
+          msg: "Wrong username or password"
+        },
+        err: true
+      })
+    }  else {
+      req.logIn(user, err => {
+        if (err) return next(err)
+        res.json({
+          payload: {
+            user: req.user,
+            msg: "Log-in successful",
+          },
+          err: false
+        })
+      })
+    }
+  })(req, res, next)
 })
 
 module.exports = router;

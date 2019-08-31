@@ -2,18 +2,26 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { comparePasswords } = require('../auth/helpers');
 const Users = require('../db/users');
+const { errors } = require('../db');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
     let user = await Users.getUserByUsername(username);
     let passMatch = await comparePasswords(password, user.password_digest);
+    delete user.password_digest;
+
     if (!passMatch) {
       done(null, false, { message: "invalid password" })
+    } else {
+      done(null, user);
     }
-    delete user.password_digest;
-    return done(null, user);
-  }
-  catch (err) {
+
+  } catch (err) {
+    if (err instanceof errors.QueryResultError) {
+      if (err.code === errors.queryResultErrorCode.noData) {
+        return done(null, false, { message: "username doesn't exists" })
+      }
+    }
     done(err)
   }
 }))
