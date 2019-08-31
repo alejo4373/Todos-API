@@ -30,10 +30,10 @@ router.post("/signup", async (req, res, next) => {
 
   } catch (err) {
     // Username already taken 
-    if (err.code === "23505") {
+    if (err.code === "23505" && err.detail.includes("already exists")) {
       res.status(409).json({
         payload: {
-          msg: "Username already taken. Please try a different one."
+          msg: "Username not available. Please try a different one."
         },
         err: true
       })
