@@ -29,7 +29,17 @@ router.post("/signup", async (req, res, next) => {
     })
 
   } catch (err) {
-    next(err);
+    // Username already taken 
+    if (err.code === "23505") {
+      res.status(409).json({
+        payload: {
+          msg: "Username already taken. Please try a different one."
+        },
+        err: true
+      })
+    } else {
+      next(err);
+    }
   }
 })
 
