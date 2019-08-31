@@ -16,10 +16,16 @@ router.post("/signup", async (req, res, next) => {
 
     let registeredUser = await Users.createUser(user);
     delete registeredUser.password_digest;
-    res.json({
-      payload: registeredUser,
-      err: false
+
+    req.logIn(registeredUser, err => {
+      if (err) return next(err)
+      res.json({
+        payload: registeredUser,
+        msg: "User registered and logged in",
+        err: false
+      })
     })
+
   } catch (err) {
     next(err);
   }
