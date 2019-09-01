@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../db/api");
+const { loginRequired } = require('../auth/helpers');
 
 router.get('/all', async (req, res, next) => {
   try {
@@ -14,9 +15,15 @@ router.get('/all', async (req, res, next) => {
   }
 });
 
-router.post('/new', async (req, res, next) => {
+router.post('/new', loginRequired, async (req, res, next) => {
+  const { body, user } = req;
+  const newTodo = {
+    ...body,
+    owner_id: user.id
+  }
+
   try {
-    const todo = await db.createTodo(req.body);
+    const todo = await db.createTodo(newTodo);
     res.json({
       payload: todo,
       err: false
