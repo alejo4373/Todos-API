@@ -17,8 +17,10 @@ const comparePasswords = (plainPassword, passwordDigest) => {
 const loginRequired = (req, res, next) => {
   if (req.user) return next();
   res.status(401).json({
-    payload: false,
-    err: "Unauthorized"
+    payload: {
+      msg: "Unauthorized"
+    },
+    err: true
   })
 }
 
