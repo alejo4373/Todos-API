@@ -1,4 +1,4 @@
-const { db, helpers } = require("./");
+const { db, helpers, errors } = require("./");
 
 const optionalCol = col => ({
   name: col, 
@@ -6,7 +6,26 @@ const optionalCol = col => ({
 })
 
 const getAllTodos = (owner_id) => db.any("SELECT * FROM todos WHERE owner_id = $1", owner_id);
-const getTodo = (id) => db.one("SELECT * FROM todos WHERE id=$/id/", { id });
+
+const getTodo = async (id, owner_id) => { 
+  let todo;
+
+  try {
+    todo = await db.one("SELECT * FROM todos WHERE id = $/id/ AND owner_id = $/owner_id/", { 
+      id,
+      owner_id
+    });
+    return todo;
+  } catch (err) {
+    if (err instanceof errors.QueryResultError &&
+        err.code === errors.queryResultErrorCode.noData) {
+        todo = {}
+        return todo;
+    }
+    throw (err)
+  }
+}
+
 const createTodo = (todo) => db.one(
   `INSERT INTO todos(owner_id, text, value) VALUES($/owner_id/, $/text/, $/value/) 
     RETURNING *`, todo

@@ -36,8 +36,10 @@ router.post('/new', loginRequired, async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
+  const owner_id = req.user.id
+  
   try {
-    const todo = await db.getTodo(id);
+    const todo = await db.getTodo(id, owner_id);
     res.json({
       payload: todo,
       err: false
