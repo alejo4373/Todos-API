@@ -37,7 +37,7 @@ router.post('/new', loginRequired, async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   const owner_id = req.user.id
-  
+
   try {
     const todo = await db.getTodo(id, owner_id);
     res.json({
@@ -51,11 +51,22 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
+  const owner_id = req.user.id
+
   try {
-    const deletedTodo = await db.removeTodo(id);
-    res.json({
-      payload: deletedTodo,
-      err: false
+    const deletedTodo = await db.removeTodo(id, owner_id);
+    if (deletedTodo) {
+      return res.json({
+        payload: deletedTodo,
+        err: false
+      })
+    }
+
+    res.status(404).json({
+      payload: {
+        msg: "Todo not found"
+      },
+      err: true
     })
   } catch (err) {
     next(err)
