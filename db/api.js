@@ -47,7 +47,7 @@ const removeTodo = async (id, owner_id) => {
   }
 }
 
-const updateTodo = (id, todoEdits) => {
+const updateTodo = async (id, owner_id, todoEdits) => {
   const columnSet = new helpers.ColumnSet([
     optionalCol("text"),
     optionalCol("value"),
@@ -55,8 +55,20 @@ const updateTodo = (id, todoEdits) => {
   ], { table: "todos" })
 
   const updateQuery = `${helpers.update(todoEdits, columnSet)} 
-    WHERE id = $/id/ RETURNING *`;
-  return db.one(updateQuery, {id})
+    WHERE id = $/id/ AND owner_id = $/owner_id/ RETURNING *`;
+  
+  let todo;
+  try {
+    todo = await db.one(updateQuery, {id, owner_id})
+    return todo
+  } catch (err) {
+    if (err instanceof errors.QueryResultError &&
+        err.code === errors.queryResultErrorCode.noData) {
+        todo = false 
+        return todo;
+    }
+    throw (err)
+  }
 }
 
 const addJournalEntry = async (entry) => {

@@ -73,13 +73,24 @@ router.delete('/:id', loginRequired, async (req, res, next) => {
   }
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', loginRequired, async (req, res, next) => {
   const { id } = req.params;
+  const owner_id = req.user.id
+  const todo_edits = req.body
   try {
-    const updatedTodo = await db.updateTodo(id, req.body);
-    res.json({
-      payload: updatedTodo,
-      err: false
+    const updatedTodo = await db.updateTodo(id, owner_id, todo_edits);
+    if (updatedTodo) {
+      return res.json({
+        payload: updatedTodo,
+        err: false
+      })
+    }
+
+    res.status(404).json({
+      payload: {
+        msg: "Todo not found"
+      },
+      err: true
     })
   } catch (err) {
     next(err)
