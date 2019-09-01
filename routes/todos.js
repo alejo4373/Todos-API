@@ -34,7 +34,7 @@ router.post('/new', loginRequired, async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', loginRequired, async (req, res, next) => {
   const { id } = req.params;
   const owner_id = req.user.id
 
@@ -49,7 +49,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', loginRequired, async (req, res, next) => {
   const { id } = req.params;
   const owner_id = req.user.id
 
