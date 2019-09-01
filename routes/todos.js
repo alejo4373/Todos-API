@@ -3,9 +3,10 @@ const router = express.Router();
 const db = require("../db/api");
 const { loginRequired } = require('../auth/helpers');
 
-router.get('/all', async (req, res, next) => {
+router.get('/all', loginRequired, async (req, res, next) => {
+  let { user } = req
   try {
-    const todos = await db.getAllTodos();
+    const todos = await db.getAllTodos(user.id);
     res.json({
       payload: todos,
       err: false

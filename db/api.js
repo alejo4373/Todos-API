@@ -5,7 +5,7 @@ const optionalCol = col => ({
   skip: (col) => col.value === null || col.value === undefined || !col.exists
 })
 
-const getAllTodos = () => db.any("SELECT * FROM todos");
+const getAllTodos = (owner_id) => db.any("SELECT * FROM todos WHERE owner_id = $1", owner_id);
 const getTodo = (id) => db.one("SELECT * FROM todos WHERE id=$/id/", { id });
 const createTodo = (todo) => db.one(
   `INSERT INTO todos(owner_id, text, value) VALUES($/owner_id/, $/text/, $/value/) 
