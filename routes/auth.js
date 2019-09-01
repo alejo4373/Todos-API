@@ -68,4 +68,14 @@ router.post("/login",  (req, res, next) => {
   })(req, res, next)
 })
 
+router.get('/logout', loginRequired, (req, res) => {
+  req.logout();
+  res.json({
+    payload: {
+      msg: "Log-out successful"
+    },
+    err: false
+  })
+})
+
 module.exports = router;
