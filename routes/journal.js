@@ -20,9 +20,10 @@ router.post('/add', loginRequired, async (req, res, next) => {
   }
 })
 
-router.get('/entries', async (req, res, next) => {
+router.get('/entries', loginRequired, async (req, res, next) => {
+  let owner_id = req.user.id
   try {
-    const entries = await Journal.getAllEntries();
+    const entries = await Journal.getAllEntries(owner_id);
     res.json({
       payload: entries,
       err: false
