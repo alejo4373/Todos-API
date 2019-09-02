@@ -31,5 +31,4 @@ const getAllEntries = (owner_id) => {
 module.exports = {
   addEntry,
   getAllEntries,
-  createTag 
 };
