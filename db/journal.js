@@ -28,10 +28,6 @@ const getAllEntries = (owner_id) => {
   return db.any(`SELECT * FROM journal_entries WHERE owner_id = $1`, owner_id)
 };
 
-const createTag = (name) => {
-  return db.one('INSERT INTO tags(name) VALUES($1) RETURNING *', name)
-}
-
 module.exports = {
   addEntry,
   getAllEntries,
