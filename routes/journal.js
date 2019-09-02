@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const journal = require("../db/journal")
+const { Journal } = require("../db")
 
 router.post('/add', async (req, res, next) => {
   try {
-    const entry = await journal.addEntry(req.body);
+    const entry = await Journal.addEntry(req.body);
     res.json({
       payload: entry,
       err: false
@@ -16,7 +16,7 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/entries', async (req, res, next) => {
   try {
-    const entries = await journal.getAllEntries();
+    const entries = await Journal.getAllEntries();
     res.json({
       payload: entries,
       err: false

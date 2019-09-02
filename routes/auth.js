@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 const passport = require('../auth/passport');
 const { genPasswordDigest, loginRequired } = require('../auth/helpers');
-let Users = require('../db/users');
+let { Users } = require('../db');
 
 router.post("/signup", async (req, res, next) => {
   const { username, password } = req.body;
