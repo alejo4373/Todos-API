@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../db/api");
+const db = require("../db/journal");
 
 router.post('/new', async (req, res, next) => {
   let { name } = req.body

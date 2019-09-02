@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../db/api");
+const journal = require("../db/journal")
 
 router.post('/add', async (req, res, next) => {
   try {
-    const journalEntry = await db.addJournalEntry(req.body);
+    const entry = await journal.addEntry(req.body);
     res.json({
-      payload: journalEntry,
+      payload: entry,
       err: false
     })
   } catch (err) {
@@ -16,9 +16,9 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/entries', async (req, res, next) => {
   try {
-    const journalEntries = await db.getAllJournalEntries();
+    const entries = await journal.getAllEntries();
     res.json({
-      payload: journalEntries,
+      payload: entries,
       err: false
     })
   } catch (err) {
