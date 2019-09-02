@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../db/api");
+const { Todos } = require("../db");
 const { loginRequired } = require('../auth/helpers');
 
 router.get('/all', loginRequired, async (req, res, next) => {
   let { user } = req
   try {
-    const todos = await db.getAllTodos(user.id);
+    const todos = await Todos.getAllTodos(user.id);
     res.json({
       payload: todos,
       err: false
@@ -24,7 +24,7 @@ router.post('/new', loginRequired, async (req, res, next) => {
   }
 
   try {
-    const todo = await db.createTodo(newTodo);
+    const todo = await Todos.createTodo(newTodo);
     res.json({
       payload: todo,
       err: false
@@ -39,7 +39,7 @@ router.get('/:id', loginRequired, async (req, res, next) => {
   const owner_id = req.user.id
 
   try {
-    const todo = await db.getTodo(id, owner_id);
+    const todo = await Todos.getTodo(id, owner_id);
     res.json({
       payload: todo,
       err: false
@@ -54,7 +54,7 @@ router.delete('/:id', loginRequired, async (req, res, next) => {
   const owner_id = req.user.id
 
   try {
-    const deletedTodo = await db.removeTodo(id, owner_id);
+    const deletedTodo = await Todos.removeTodo(id, owner_id);
     if (deletedTodo) {
       return res.json({
         payload: deletedTodo,
@@ -78,7 +78,7 @@ router.patch('/:id', loginRequired, async (req, res, next) => {
   const owner_id = req.user.id
   const todo_edits = req.body
   try {
-    const updatedTodo = await db.updateTodo(id, owner_id, todo_edits);
+    const updatedTodo = await Todos.updateTodo(id, owner_id, todo_edits);
     if (updatedTodo) {
       return res.json({
         payload: updatedTodo,

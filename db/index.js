@@ -1,7 +1,9 @@
-const pgp = require('pg-promise')();
-const connectionString = process.env.DATABASE_URL || "postgres://localhost:5432/production";
+const Users = require('./users');
+const Todos = require('./todos');
+const Journal = require('./journal');
+
 module.exports = {
-  helpers: pgp.helpers, 
-  errors: pgp.errors,
-  db: pgp(connectionString)
+  Users,
+  Todos,
+  Journal
 }

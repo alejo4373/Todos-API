@@ -1,4 +1,4 @@
-const { db, helpers } = require('./');
+const { db, helpers } = require('./pgp');
 
 const createUser = async (user) => {
   try {

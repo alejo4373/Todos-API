@@ -1,4 +1,4 @@
-const { db, helpers, errors } = require("./");
+const { db, helpers, errors } = require("./pgp");
 
 const addEntry = async (entry) => {
   const { tag_ids } = entry;
