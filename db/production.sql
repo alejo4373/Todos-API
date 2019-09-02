@@ -27,6 +27,7 @@ CREATE TABLE journal_entries (
 
 CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
+  owner_id INT REFERENCES users(id),
   name VARCHAR (25)
 );
 
