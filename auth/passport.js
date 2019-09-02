@@ -6,22 +6,20 @@ const { errors } = require('../db/pgp');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
-    let user = await Users.getUserByUsername(username);
-    let passMatch = await comparePasswords(password, user.password_digest);
-    delete user.password_digest;
-
-    if (!passMatch) {
-      done(null, false, { message: "invalid password" })
-    } else {
-      done(null, user);
+    const user = await Users.getUserByUsername(username);
+    if (!user) {
+      return done(null, false, { message: "username doesn't exists" })
     }
+
+    const passMatch = await comparePasswords(password, user.password_digest);
+    if (!passMatch) {
+      return done(null, false, { message: "invalid password" })
+    } 
+
+    delete user.password_digest;
+    done(null, user);
 
   } catch (err) {
-    if (err instanceof errors.QueryResultError) {
-      if (err.code === errors.queryResultErrorCode.noData) {
-        return done(null, false, { message: "username doesn't exists" })
-      }
-    }
     done(err)
   }
 }))
