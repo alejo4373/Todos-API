@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Todos } = require("../db");
+const { Todos, Users } = require("../db");
 const { loginRequired } = require('../auth/helpers');
 
 router.get('/all', loginRequired, async (req, res, next) => {
@@ -79,9 +79,14 @@ router.patch('/:id', loginRequired, async (req, res, next) => {
   const todo_edits = req.body
   try {
     const updatedTodo = await Todos.updateTodo(id, owner_id, todo_edits);
+    let awardedUser;
     if (updatedTodo) {
+      if (updatedTodo.completed) {
+        awardedUser = await Users.awardPoints(owner_id, updatedTodo.value)
+      }
       return res.json({
         payload: updatedTodo,
+        user: awardedUser,
         err: false
       })
     }

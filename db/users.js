@@ -36,8 +36,24 @@ const getUserById = async (id) => {
   }
 }
 
+const awardPoints = async (userId, points) => {
+  try {
+    let updateQuery = `UPDATE users SET points = points + $/points/ 
+    WHERE id = $/userId/ RETURNING *`
+
+    let user = await db.one(updateQuery, {
+      userId,
+      points
+    })
+    return user;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   createUser,
   getUserByUsername,
-  getUserById
+  getUserById,
+  awardPoints
 }
