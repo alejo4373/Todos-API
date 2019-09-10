@@ -30,31 +30,32 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', indexRouter);
+app.use('/', indexRouter)
 app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
 app.use('/api/journal', journalRouter);
 app.use('/api/tag', tagsRouter);
 
-app.use('*', (req, res, next) => {
-  res.sendFile(path.resolve('client/build/index.html'))
-})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+   res.status(404).json({
+    payload: "What you where looking for was not found.",
+    err: false
+  }) 
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    payload: {
+      err: err,
+      errStack: err.stack
+    },
+    err: true
+  });
 });
 
 module.exports = app;
