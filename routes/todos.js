@@ -99,15 +99,11 @@ router.delete('/:id', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner = req.user.id
   const todo_edits = req.body
   try {
-    const updatedTodo = await Todos.updateTodo(id, owner, todo_edits);
+    const updatedTodo = await Todos.updateTodo(id, todo_edits);
     let awardedUser;
     if (updatedTodo) {
-      if (updatedTodo.completed) {
-        awardedUser = await Users.awardPoints(owner, updatedTodo.value)
-      }
       return res.json({
         payload: updatedTodo,
         user: awardedUser,
