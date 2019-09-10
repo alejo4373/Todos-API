@@ -75,10 +75,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner = req.user.id
 
   try {
-    const deletedTodo = await Todos.removeTodo(id, owner);
+    const deletedTodo = await Todos.removeTodo(id);
     if (deletedTodo) {
       return res.json({
         payload: deletedTodo,
