@@ -26,19 +26,16 @@ const getAllTodos = async (params) => {
   }
 }
 
-const getTodo = async (id, owner) => { 
+const getTodo = async (id) => { 
   let todo;
 
   try {
-    todo = await db.one("SELECT * FROM todos WHERE id = $/id/", { 
-      id,
-      owner
-    });
+    todo = await db.one("SELECT * FROM todos WHERE id = $/id/", { id });
     return todo;
   } catch (err) {
     if (err instanceof errors.QueryResultError &&
         err.code === errors.queryResultErrorCode.noData) {
-        todo = {}
+        todo = false
         return todo;
     }
     throw (err)

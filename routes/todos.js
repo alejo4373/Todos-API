@@ -49,14 +49,23 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner = req.user.id
 
   try {
-    const todo = await Todos.getTodo(id, owner);
+    const todo = await Todos.getTodo(id);
+    if (!todo) {
+      return res.status(404).json({
+        payload: {
+          msg: "Todo not found"
+        },
+        err: true
+      })
+    }
+
     res.json({
       payload: todo,
       err: false
     })
+
   } catch (err) {
     next(err)
   }
