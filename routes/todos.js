@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { Todos, Users } = require("../db");
+const { Todos, Users, Helpers } = require("../db");
 const { loginRequired } = require('../auth/helpers');
 
-router.get('/all', loginRequired, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   let { user } = req
   try {
     const todos = await Todos.getAllTodos(user.id);
@@ -16,11 +16,17 @@ router.get('/all', loginRequired, async (req, res, next) => {
   }
 });
 
-router.post('/new', loginRequired, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const { body, user } = req;
-  const newTodo = {
-    ...body,
-    owner_id: user.id
+  const newTodo = body
+  const expectedProps = ["owner", "text"];
+  const missingProps = Helpers.missingProps(expectedProps, newTodo)
+
+  if (missingProps.length) {
+    return res.status(400).json({
+      payload: `Expected valid values for todo [${missingProps}]`,
+      err: true
+    })
   }
 
   try {
@@ -30,16 +36,23 @@ router.post('/new', loginRequired, async (req, res, next) => {
       err: false
     })
   } catch (err) {
-    next(err)
+    if (typeof err === "string") {
+      res.status(400).json({
+        payload: err,
+        err: true
+      })
+    } else {
+      next(err)
+    }
   }
 });
 
-router.get('/:id', loginRequired, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner_id = req.user.id
+  const owner = req.user.id
 
   try {
-    const todo = await Todos.getTodo(id, owner_id);
+    const todo = await Todos.getTodo(id, owner);
     res.json({
       payload: todo,
       err: false
@@ -49,12 +62,12 @@ router.get('/:id', loginRequired, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', loginRequired, async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner_id = req.user.id
+  const owner = req.user.id
 
   try {
-    const deletedTodo = await Todos.removeTodo(id, owner_id);
+    const deletedTodo = await Todos.removeTodo(id, owner);
     if (deletedTodo) {
       return res.json({
         payload: deletedTodo,
@@ -73,16 +86,16 @@ router.delete('/:id', loginRequired, async (req, res, next) => {
   }
 });
 
-router.patch('/:id', loginRequired, async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner_id = req.user.id
+  const owner = req.user.id
   const todo_edits = req.body
   try {
-    const updatedTodo = await Todos.updateTodo(id, owner_id, todo_edits);
+    const updatedTodo = await Todos.updateTodo(id, owner, todo_edits);
     let awardedUser;
     if (updatedTodo) {
       if (updatedTodo.completed) {
-        awardedUser = await Users.awardPoints(owner_id, updatedTodo.value)
+        awardedUser = await Users.awardPoints(owner, updatedTodo.value)
       }
       return res.json({
         payload: updatedTodo,

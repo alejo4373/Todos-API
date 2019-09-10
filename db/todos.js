@@ -5,15 +5,15 @@ const optionalCol = col => ({
   skip: (col) => col.value === null || col.value === undefined || !col.exists
 })
 
-const getAllTodos = (owner_id) => db.any("SELECT * FROM todos WHERE owner_id = $1", owner_id);
+const getAllTodos = (owner) => db.any("SELECT * FROM todos", owner);
 
-const getTodo = async (id, owner_id) => { 
+const getTodo = async (id, owner) => { 
   let todo;
 
   try {
-    todo = await db.one("SELECT * FROM todos WHERE id = $/id/ AND owner_id = $/owner_id/", { 
+    todo = await db.one("SELECT * FROM todos WHERE id = $/id/", { 
       id,
-      owner_id
+      owner
     });
     return todo;
   } catch (err) {
@@ -26,16 +26,25 @@ const getTodo = async (id, owner_id) => {
   }
 }
 
-const createTodo = (todo) => db.one(
-  `INSERT INTO todos(owner_id, text, value) VALUES($/owner_id/, $/text/, $/value/) 
-    RETURNING *`, todo
-)
+const createTodo = async (todo) => {
+  let newTodo;
+  try {
+    newTodo = await db.one(`INSERT INTO todos(owner, text) VALUES($/owner/, $/text/)  
+      RETURNING *`, todo)
+    return newTodo;
+  } catch (err) {
+    let customErr = `owner '${todo.owner}' doesn't exist.`
+    if (err.code === "23503") {
+      err = customErr
+    }
+    throw err;
+  }
+}
 
-const removeTodo = async (id, owner_id) => { 
+const removeTodo = async (id, owner) => { 
   let todo;
   try {
-    todo = await db.one(`DELETE FROM todos WHERE id = $/id/ AND owner_id = $/owner_id/ 
-      RETURNING *`, { id, owner_id });
+    todo = await db.one(`DELETE FROM todos WHERE id = $/id/ RETURNING *`, { id, owner });
     return todo;
   } catch (err) {
     if (err instanceof errors.QueryResultError &&
@@ -47,7 +56,7 @@ const removeTodo = async (id, owner_id) => {
   }
 }
 
-const updateTodo = async (id, owner_id, todoEdits) => {
+const updateTodo = async (id, owner, todoEdits) => {
   const columnSet = new helpers.ColumnSet([
     optionalCol("text"),
     optionalCol("value"),
@@ -55,11 +64,11 @@ const updateTodo = async (id, owner_id, todoEdits) => {
   ], { table: "todos" })
 
   const updateQuery = `${helpers.update(todoEdits, columnSet)} 
-    WHERE id = $/id/ AND owner_id = $/owner_id/ RETURNING *`;
+    WHERE id = $/id/ AND owner = $/owner/ RETURNING *`;
   
   let todo;
   try {
-    todo = await db.one(updateQuery, {id, owner_id})
+    todo = await db.one(updateQuery, {id, owner})
     return todo
   } catch (err) {
     if (err instanceof errors.QueryResultError &&
