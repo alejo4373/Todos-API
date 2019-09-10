@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE todos (
-  id SERIAL PRIMARY KEY,
+  id VARCHAR PRIMARY KEY,
   owner VARCHAR REFERENCES users(username),
   text VARCHAR NOT NULL,
   completed BOOLEAN DEFAULT FALSE

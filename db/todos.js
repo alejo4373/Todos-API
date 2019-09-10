@@ -45,8 +45,8 @@ const getTodo = async (id) => {
 const createTodo = async (todo) => {
   let newTodo;
   try {
-    newTodo = await db.one(`INSERT INTO todos(owner, text) VALUES($/owner/, $/text/)  
-      RETURNING *`, todo)
+    newTodo = await db.one(`INSERT INTO todos(id, owner, text) 
+      VALUES($/id/, $/owner/, $/text/) RETURNING *`, todo)
     return newTodo;
   } catch (err) {
     let customErr = `owner '${todo.owner}' doesn't exist.`

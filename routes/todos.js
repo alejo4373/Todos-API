@@ -17,8 +17,10 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-  const { body, user } = req;
-  const newTodo = body
+  const newTodo = {
+    id: Helpers.genId(),
+    ...req.body
+  }
   const expectedProps = ["owner", "text"];
   const missingProps = Helpers.missingProps(expectedProps, newTodo)
 
@@ -124,4 +126,32 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
+router.put('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const owner = req.user.id
+  const todo_edits = req.body
+  try {
+    const updatedTodo = await Todos.updateTodo(id, owner, todo_edits);
+    let awardedUser;
+    if (updatedTodo) {
+      if (updatedTodo.completed) {
+        awardedUser = await Users.awardPoints(owner, updatedTodo.value)
+      }
+      return res.json({
+        payload: updatedTodo,
+        user: awardedUser,
+        err: false
+      })
+    }
+
+    res.status(404).json({
+      payload: {
+        msg: "Todo not found"
+      },
+      err: true
+    })
+  } catch (err) {
+    next(err)
+  }
+});
 module.exports = router;
