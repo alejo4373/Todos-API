@@ -157,13 +157,12 @@ router.put('/:id', async (req, res, next) => {
         payload: updatedTodo,
         err: false
       })
-    } else { // create todo
-      const todoId = Helpers.genId();
+    } else { // create todo with id in params
       const newTodo = await Todos.createTodo({
-        id: todoId,
+        id,
         ...todo_edits
       });      
-      return res.json({
+      return res.status(201).json({
         payload: newTodo,
         err: false
       })
@@ -173,4 +172,5 @@ router.put('/:id', async (req, res, next) => {
       next(err)
     }
 });
+
 module.exports = router;
