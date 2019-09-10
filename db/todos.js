@@ -5,7 +5,26 @@ const optionalCol = col => ({
   skip: (col) => col.value === null || col.value === undefined || !col.exists
 })
 
-const getAllTodos = (owner) => db.any("SELECT * FROM todos", owner);
+const getAllTodos = async (params) => {
+  let { owner, completed } = params
+  let SQL = "SELECT * FROM todos"
+
+  if (owner && completed) {
+    SQL += " WHERE owner = $/owner/ AND completed = $/completed/"
+  } else if (owner) {
+    SQL += " WHERE owner = $/owner/"
+  } else if (completed) {
+    SQL += " WHERE completed = $/completed/"
+  }
+
+  let todos;
+  try {
+    todos = await db.any(SQL, params);
+    return todos;
+  } catch (err) {
+    throw err;
+  }
+}
 
 const getTodo = async (id, owner) => { 
   let todo;

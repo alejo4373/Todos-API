@@ -4,8 +4,9 @@ const { Todos, Users, Helpers } = require("../db");
 const { loginRequired } = require('../auth/helpers');
 
 router.get('/', async (req, res, next) => {
+  const queryParams = req.query;
   try {
-    const todos = await Todos.getAllTodos();
+    const todos = await Todos.getAllTodos(queryParams);
     res.json({
       payload: todos,
       err: false
