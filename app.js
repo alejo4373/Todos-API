@@ -7,7 +7,7 @@ var session = require('express-session');
 var passport = require('./auth/passport');
 
 var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
+var usersRouter = require('./routes/users');
 var todosRouter = require('./routes/todos');
 var journalRouter = require('./routes/journal');
 var tagsRouter = require('./routes/tags');
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/', indexRouter);
-app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
 app.use('/api/journal', journalRouter);
 app.use('/api/tag', tagsRouter);

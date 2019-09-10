@@ -2,11 +2,16 @@ const { db, errors } = require('./pgp');
 
 const createUser = async (user) => {
   try {
-    let insertQuery = `INSERT INTO users(username, password_digest, points)
-    VALUES($/username/, $/password_digest/, $/points/) RETURNING *`;
+    let insertQuery = `INSERT INTO users(username) VALUES($/username/) RETURNING *`;
     let newUser = await db.one(insertQuery, user)
     return newUser;
   } catch (err) {
+    // Username already taken 
+    if (err.code === "23505" && err.detail.includes("already exists")) {
+      let customErr = "Username not available. Please try a different one.";
+      err = customErr;
+      throw customErr;
+    }
     throw err;
   }
 }
