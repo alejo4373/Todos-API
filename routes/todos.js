@@ -128,30 +128,49 @@ router.patch('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const owner = req.user.id
   const todo_edits = req.body
+  const expectedProps = ["owner", "text", "completed"];
+  const missingProps = Helpers.missingProps(expectedProps, todo_edits)
+
+  if (missingProps.length) {
+    return res.status(400).json({
+      payload: `Missing valid values to put todo [${missingProps}]`,
+      err: true
+    })
+  }
+
   try {
-    const updatedTodo = await Todos.updateTodo(id, owner, todo_edits);
-    let awardedUser;
-    if (updatedTodo) {
-      if (updatedTodo.completed) {
-        awardedUser = await Users.awardPoints(owner, updatedTodo.value)
+    const todo = await Todos.getTodo(id);
+    
+    if (todo) { // Todo already exits, trying to update
+      const updatedTodo = await Todos.updateTodo(id, todo_edits);
+      if (!updatedTodo) {
+        return res.status(400).json({
+          payload: {
+            msg: "New owner doesn't exist. Verify your data and try again"
+          },
+          err: true
+        })
       }
+
       return res.json({
         payload: updatedTodo,
-        user: awardedUser,
+        err: false
+      })
+    } else { // create todo
+      const todoId = Helpers.genId();
+      const newTodo = await Todos.createTodo({
+        id: todoId,
+        ...todo_edits
+      });      
+      return res.json({
+        payload: newTodo,
         err: false
       })
     }
 
-    res.status(404).json({
-      payload: {
-        msg: "Todo not found"
-      },
-      err: true
-    })
-  } catch (err) {
-    next(err)
-  }
+   } catch (err) {
+      next(err)
+    }
 });
 module.exports = router;

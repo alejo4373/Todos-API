@@ -72,26 +72,31 @@ const removeTodo = async (id, owner) => {
   }
 }
 
-const updateTodo = async (id, owner, todoEdits) => {
+const updateTodo = async (id, todoEdits) => {
   const columnSet = new helpers.ColumnSet([
     optionalCol("text"),
-    optionalCol("value"),
     optionalCol("completed"),
+    optionalCol("owner"),
   ], { table: "todos" })
 
   const updateQuery = `${helpers.update(todoEdits, columnSet)} 
-    WHERE id = $/id/ AND owner = $/owner/ RETURNING *`;
+    WHERE id = $/id/ RETURNING *`;
   
   let todo;
   try {
-    todo = await db.one(updateQuery, {id, owner})
+    todo = await db.one(updateQuery, { id })
     return todo
   } catch (err) {
-    if (err instanceof errors.QueryResultError &&
-        err.code === errors.queryResultErrorCode.noData) {
+    if (
+      (err instanceof errors.QueryResultError &&
+       err.code === errors.queryResultErrorCode.noData)
+      || 
+      (err.code === "23503") //New owner not in table 
+    ) {
         todo = false 
         return todo;
     }
+        console.log(err)
     throw (err)
   }
 }
