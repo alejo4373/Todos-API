@@ -56,9 +56,19 @@ const awardPoints = async (userId, points) => {
   }
 }
 
+const getAll = async () => {
+  try {
+    let users = await db.any('SELECT * FROM users');
+    return users;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   createUser,
   getUserByUsername,
   getUserById,
-  awardPoints
+  awardPoints,
+  getAll
 }

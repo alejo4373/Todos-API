@@ -40,6 +40,18 @@ router.post("/signup", async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await Users.getAll();
+    res.json({
+      payload: users,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 router.all('/', (req, res, next) => {
   res.status(405).json({
     payload: "Nah, nah, nah",
