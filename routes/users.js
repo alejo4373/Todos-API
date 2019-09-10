@@ -52,6 +52,20 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:username', async (req, res, next) => {
+  let { username } = req.params
+  try {
+    const user = await Users.getUserByUsername(username);
+    if (!user) { return next(user) }
+    res.json({
+      payload: user,
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+});
+
 router.all('/', (req, res, next) => {
   res.status(405).json({
     payload: "Nah, nah, nah",
