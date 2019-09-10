@@ -1,6 +1,6 @@
 # Todos API
 
-### Root https://____/api
+### Root https://fsw62-todos-api.herokuapp.com/api
 
 ### Resources
 * users
@@ -20,7 +20,7 @@
 
 #### Todos
 | Method   | Endpoint           | What does this do? | Possible Query Params |
-|----------|--------------------|--------------------|-----------------|
+|----------|--------------------|--------------------|-----------------------|
 | `GET`    | `/todos`           | `_________________`| `username=<username>`, `completed=<true|false> `
 | `POST`   | `/todos`           | `_________________`||
 | `GET`    | `/todos/<todo-id>` | `_________________`||
