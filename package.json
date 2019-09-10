@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "heroku-prebuild": "cd client && npm i && npm run build"
+    "heroku-prebuild": "npm i"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
