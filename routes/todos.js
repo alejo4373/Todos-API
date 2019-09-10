@@ -168,4 +168,11 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
+router.all('/', (req, res, next) => {
+  res.status(405).json({
+    payload: "Nah, nah, nah",
+    err: true
+  })
+})
+
 module.exports = router;
