@@ -39,11 +39,11 @@ directory. To create a Heroku app and automatically add a `heroku` remote to you
     ```
 5. To test the API using Postman create a Postman environment and add the environment variable `server_address`. Set it's value to the url heroku gave your app e.g. `https://fsw62-todos-api.herokuapp.com`. More on this [here](https://learning.getpostman.com/docs/postman/environments_and_globals/intro_to_environments_and_globals/).
 
-    Test the API with this Postman collect: 
+    Test the API with this Postman collection. Click to Download: 
     
     [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2db327bfd6ea8e58ddbe)
 
-6. Once verified what everything works share with the class the url for them to start playing. It should look something similar to: `https://fsw62-todos-api2.herokuapp.com/`
+6. Once verified what everything works share the url with the class and let them play with it. Your url should look something similar to: `https://fsw62-todos-api2.herokuapp.com`
 
 ## API Docs
 
