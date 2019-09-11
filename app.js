@@ -41,8 +41,8 @@ app.use('/api/tag', tagsRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
    res.status(404).json({
-    payload: "What you where looking for was not found.",
-    err: false
+    payload: "What you were looking for was not found. The endpoint or method is unhandled by the Server",
+    err: true
   }) 
 });
 
