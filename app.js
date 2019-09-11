@@ -8,6 +8,7 @@ var passport = require('./auth/passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var sixRouter = require('./routes/six');
 var todosRouter = require('./routes/todos');
 var journalRouter = require('./routes/journal');
 var tagsRouter = require('./routes/tags');
@@ -32,6 +33,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter)
+app.use('/api/6', sixRouter)
 app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
 app.use('/api/journal', journalRouter);
