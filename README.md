@@ -1,6 +1,51 @@
 # Todos API
+This Server/API is intended to be used by the fellows to practice making network requests, learn about HTTP status codes, their uses and differences, learn about query parameters and body data sent to appropriate endpoints. 
 
-### Root https://fsw62-todos-api.herokuapp.com/api
+More specifically this server is used for the [`restfulapi_exercise`](https://github.com/joinpursuit/restfulapi_exercise).
+
+## Dependencies
+  * `node`
+  * `npm`
+  * PostgreSQL / `psql`
+  * Postman
+
+## Setup
+This server is to be deployed to Heroku. You will need a Heroku account and the Heroku
+CLI to follow this steps.
+
+1. Once this repository has been cloned to your machine and while you are inside its
+directory. To create a Heroku app and automatically add a `heroku` remote to your repo, run. 
+    ```sh
+    heroku apps:create <your_app_name>
+    ```
+
+2. Provide the Heroku app with a Postgres database with
+    ```sh
+    heroku addons:create heroku-postgresql:hobby-dev -a <your_app_name>
+    ```
+
+3. To create the tables in the database, take a look at [`db/production.sql`](db/production.sql). For local development you would want to leave uncommented the lines that refer to creating, dropping and connecting to a database. For deployment you should comment those lines and leave only the drop and create table lines. Find more [here](https://devcenter.heroku.com/articles/heroku-postgresql).
+    ```sh
+    cat db/production.sql | heroku pg:psql -a <your_app_name>
+    ```
+
+4. Push this repo to Heroku to be deployed
+    ```sh
+    git push heroku master 
+    ```
+    or if you want to push a feature branch of the repo
+    ```sh
+    git push heroku feature_branch:master
+    ```
+5. To test the API using Postman create a Postman environment and add the environment variable `server_address`. Set it's value to the url heroku gave your app e.g. `https://fsw62-todos-api.herokuapp.com`. More on this [here](https://learning.getpostman.com/docs/postman/environments_and_globals/intro_to_environments_and_globals/).
+
+    Test the API with this Postman collect: 
+    
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2db327bfd6ea8e58ddbe)
+
+6. Once verified what everything works share with the class the url for them to start playing. It should look something similar to: `https://fsw62-todos-api2.herokuapp.com/`
+
+## API Docs
 
 ### Resources
 * users
@@ -18,40 +63,13 @@
 #### Todos
 | Method   | Endpoint           | Possible Query Params |
 |----------|--------------------|-----------------------|
-| `GET`    | `/todos`           | `username=<username>`, `completed=<true\|false>`
+| `GET`    | `/todos`           | `owner=<username>`, `completed=<true\|false>`
 | `POST`   | `/todos`           ||
 | `GET`    | `/todos/<todo-id>` ||
 | `PUT`    | `/todos/<todo-id>` ||
 | `PATCH`  | `/todos/<todo-id>` ||
 | `DELETE` | `/todos/<todo-id>` ||
 
-## Tasks
-1. Try out all the requests that are possible with this API. For all the possible requests create a list like the following.
-Separate requests by a long line of underscores.
-    * **Request**: METHOD - ENDPOINT
-    * **Body** (if applicable POST/PUT/PATCH)
-    ```json
-      {
-        "owner": "alejo4373",
-        "text": "1st Todo"
-      }
-    ```
-    * **Response**:
-    ```json
-    {
-      "userId": 1,
-      "id": 1,
-      "title": "delectus aut autem",
-      "completed": false
-    }
-    ```
-    * **What does it do?**: EXPLAIN WHAT THE REQUEST DID/DO IN PLAIN ENGLISH
-
-2. Find as much status codes as possible. I will tell you how many there are by the end.
-
-### Bonuses
-1. Take a look at the next lesson to learn how to make make network requests with Javascript.
-Since you previously had build a simple Todos App with HTML and now you know how to manipulate
-the DOM, add some JS to try to connect that app to this API so that todos you enter in the page 
-are saved to the API. Marking a todo as complete or uncompleted should work.
-2. Find the easter egg.
+### Final notes
+1. The exercise asks of the fellows/students to find how many http status codes they can find by using this api. Later on I make a poll on Slack and ask how many they have found and revealing how many there are by saying: `There are /6 status codes. How many have you found?`. What appears to be a typo `/6` should lead them to the easter egg endpoint that is mentioned in the exercise instructions.
+2. The easter egg I put involves the payment of $10 to whoever finds it first. This might not be what you want, so make sure to take a look at [`routes/index.js`](routes/index.js) and modify it.
