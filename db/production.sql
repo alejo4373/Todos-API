@@ -1,10 +1,10 @@
--- DROP DATABASE IF EXISTS todos_api_db;
--- CREATE DATABASE todos_api_db;
+DROP DATABASE IF EXISTS todos_api_db;
+CREATE DATABASE todos_api_db;
 
--- \c todos_api_db;
+\c todos_api_db;
 
-DROP TABLE todos CASCADE;
-DROP TABLE users CASCADE;
+-- DROP TABLE todos CASCADE;
+-- DROP TABLE users CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,

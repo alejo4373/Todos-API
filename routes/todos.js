@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Todos, Users, Helpers } = require("../db");
-const { loginRequired } = require('../auth/helpers');
+const { Todos, Helpers } = require("../db");
 
 router.get('/', async (req, res, next) => {
   const queryParams = req.query;
