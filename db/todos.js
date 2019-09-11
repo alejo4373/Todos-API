@@ -96,7 +96,6 @@ const updateTodo = async (id, todoEdits) => {
         todo = false 
         return todo;
     }
-        console.log(err)
     throw (err)
   }
 }
