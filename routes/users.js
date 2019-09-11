@@ -19,7 +19,7 @@ router.post("/signup", async (req, res, next) => {
     console.log("body =>", req.body)
     let registeredUser = await Users.createUser(user);
     console.log("user =>", registeredUser)
-    res.json({
+    res.status(201).json({
       payload: {
         user: registeredUser,
         msg: "User created",

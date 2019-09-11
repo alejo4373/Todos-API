@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     const todo = await Todos.createTodo(newTodo);
-    res.json({
+    res.status(201).json({
       payload: todo,
       err: false
     })
