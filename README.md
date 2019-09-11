@@ -29,7 +29,7 @@ tables with:
 3. Dev server will run at `http://localhost:3100`. Start it with:
 
     ```sh
-    npm start:dev
+    npm run start:dev
     ```
 
 ### Deployment
