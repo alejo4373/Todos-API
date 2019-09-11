@@ -10,6 +10,29 @@ More specifically this server is used for the [`restfulapi_exercise`](https://gi
   * Postman
 
 ## Setup
+
+### Local
+
+1. After cloning this repo install dependencies with:
+
+    ```sh
+    npm install
+    ```
+
+2. Make sure you have Postgres running in your machine. Revise [`db/todos_api_db.sql`](db/todos_api_db.sql)
+and make sure the lines that drop, create and connect to a database are uncommented. Create database and 
+tables with:
+
+    ```sh
+    psql -f db/todos_api_db.sql
+    ```
+3. Dev server will run at `http://localhost:3100`. Start it with:
+
+    ```sh
+    npm start:dev
+    ```
+
+### Deployment
 This server is to be deployed to Heroku. You will need a Heroku account and the Heroku
 CLI to follow this steps.
 
