@@ -24,9 +24,9 @@ directory. To create a Heroku app and automatically add a `heroku` remote to you
     heroku addons:create heroku-postgresql:hobby-dev -a <your_app_name>
     ```
 
-3. To create the tables in the database, take a look at [`db/production.sql`](db/production.sql). For local development you would want to leave uncommented the lines that refer to creating, dropping and connecting to a database. For deployment you should comment those lines and leave only the drop and create table lines. Find more [here](https://devcenter.heroku.com/articles/heroku-postgresql).
+3. To create the tables in the database, take a look at [`db/todos_api_db.sql`](db/todos_api_db.sql). For local development you would want to leave uncommented the lines that refer to creating, dropping and connecting to a database. For deployment you should comment those lines and leave only the drop and create table lines. Find more [here](https://devcenter.heroku.com/articles/heroku-postgresql).
     ```sh
-    cat db/production.sql | heroku pg:psql -a <your_app_name>
+    cat db/todos_api_db.sql | heroku pg:psql -a <your_app_name>
     ```
 
 4. Push this repo to Heroku to be deployed
