@@ -9,29 +9,24 @@
 ### Endpoints
 
 #### Users
-| Method | Endpoint           | What does this do? |
-|--------|--------------------|--------------------|
-| `GET`  | `/users`           | `_________________`|
-| `GET`  | `/users/<user-id>` | `_________________`|
-| `POST`  | `/users/signup`   | `_________________`|
-
-
-* Fill in the blanks above :arrow_up: 
+| Method | Endpoint                 | 
+|--------|--------------------------|
+| `GET`  | `/users`                 |
+| `GET`  | `/users/<user-username>` |
+| `POST` | `/users/signup`          |
 
 #### Todos
-| Method   | Endpoint           | What does this do? | Possible Query Params |
-|----------|--------------------|--------------------|-----------------------|
-| `GET`    | `/todos`           | `_________________`| `username=<username>`, `completed=<true|false> `
-| `POST`   | `/todos`           | `_________________`||
-| `GET`    | `/todos/<todo-id>` | `_________________`||
-| `PUT`    | `/todos/<todo-id>` | `_________________`||
-| `PATCH`  | `/todos/<todo-id>` | `_________________`||
-| `DELETE` | `/todos/<todo-id>` | `_________________`||
-
-* Fill in the blanks above :arrow_up: 
+| Method   | Endpoint           | Possible Query Params |
+|----------|--------------------|-----------------------|
+| `GET`    | `/todos`           | `username=<username>`, `completed=<true\|false>`
+| `POST`   | `/todos`           ||
+| `GET`    | `/todos/<todo-id>` ||
+| `PUT`    | `/todos/<todo-id>` ||
+| `PATCH`  | `/todos/<todo-id>` ||
+| `DELETE` | `/todos/<todo-id>` ||
 
 ## Tasks
-1. Try out all the requests that are possible with this API. For all the possible requests Create a list like the following.
+1. Try out all the requests that are possible with this API. For all the possible requests create a list like the following.
 Separate requests by a long line of underscores.
     * **Request**: METHOD - ENDPOINT
     * **Body** (if applicable POST/PUT/PATCH)
@@ -55,8 +50,8 @@ Separate requests by a long line of underscores.
 2. Find as much status codes as possible. I will tell you how many there are by the end.
 
 ### Bonuses
-1. Take a look at the next lesson. To learn how to make make network requests with Javascript
-Since you previously had build a simple Todos APP with HTML try to connect that app to this
-API so that todos you enter in the page are save to the API. Marking a todo as complete or uncompleted
-should work.
+1. Take a look at the next lesson to learn how to make make network requests with Javascript.
+Since you previously had build a simple Todos App with HTML and now you know how to manipulate
+the DOM, add some JS to try to connect that app to this API so that todos you enter in the page 
+are saved to the API. Marking a todo as complete or uncompleted should work.
 2. Find the easter egg.
