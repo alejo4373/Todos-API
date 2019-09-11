@@ -64,7 +64,7 @@ directory. To create a Heroku app and automatically add a `heroku` remote to you
 
     Test the API with this Postman collection. Click to Download: 
     
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2db327bfd6ea8e58ddbe)
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1142998a489d1da482b0)
 
 6. Once verified what everything works share the url with the class and let them play with it. Your url should look something similar to: `https://fsw62-todos-api2.herokuapp.com`
 
