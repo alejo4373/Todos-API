@@ -28,6 +28,29 @@ router.get('/6', function (req, res, next) {
 
 router.post('/6', async (req, res, next) => {
   let { username } = req.body
+  let filteredFields = Object.keys(req.body).filter(field => field !== "username").map(f => `'${f}'`);
+
+  if (filteredFields.length && !username) {
+    return res.status(400).send(`
+      <html>
+        <body style="max-width: 728px; margin: 0 auto;" >
+        <img style="display: block; margin: 0 auto" src="https://media.giphy.com/media/3o7bu6Qs4WE8ZRinDi/giphy.gif" alt="no no no" />
+        <pre>
+          {
+            payload: {
+              msg: "Unexpected field(s): ${filteredFields.join(', ')}.",
+              hint: "How does this API identify its users?"
+            },
+            err: true 
+
+          }
+        </pre>
+        <img style="display: block; margin: 0 auto"src="https://media.giphy.com/media/co7KFI57yaXIY/giphy.gif" alt="who are you?" />
+        </body>
+      </html>
+    `)
+  }
+
   if (!username) {
     return res.status(400).send(`
       <html>
