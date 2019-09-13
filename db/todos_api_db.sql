@@ -1,10 +1,11 @@
--- DROP DATABASE IF EXISTS todos_api_db;
--- CREATE DATABASE todos_api_db;
+DROP DATABASE IF EXISTS todos_api_db;
+CREATE DATABASE todos_api_db;
 
--- \c todos_api_db;
+\c todos_api_db;
 
-DROP TABLE todos CASCADE;
-DROP TABLE users CASCADE;
+-- DROP TABLE IF EXISTS todos CASCADE; 
+-- DROP TABLE IF EXISTS users CASCADE; 
+-- DROP TABLE IF EXISTS winners CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -16,4 +17,10 @@ CREATE TABLE todos (
   owner VARCHAR REFERENCES users(username),
   text VARCHAR NOT NULL,
   completed BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE winners (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR UNIQUE,
+  ts TIMESTAMPTZ DEFAULT NOW()
 );
