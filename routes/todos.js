@@ -5,15 +5,12 @@ const { Todos, Helpers } = require("../db");
 router.get('/', async (req, res, next) => {
   const queryParams = req.query;
   try {
-    console.log('about to call query')
     const todos = await Todos.getAllTodos(queryParams);
-    console.log('query complete')
     res.json({
       payload: todos,
       err: false
     })
   } catch (err) {
-    console.log(err)
     if (err.message.includes('You cannot read God\'s todos')) {
       return res.status(403).json({
         payload: {
