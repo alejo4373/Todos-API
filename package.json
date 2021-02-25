@@ -11,7 +11,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "morgan": "~1.9.0",
-    "pg-promise": "^8.7.3",
+    "pg-promise": "^10.9.2",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
