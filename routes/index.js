@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
   })
 });
 
-router.get('/6', function (req, res, next) {
+router.get('/9', function (req, res, next) {
   res.status(418).send(`
     <html>
       <body style="max-width: 728px; margin: 0 auto;" >
@@ -26,7 +26,7 @@ router.get('/6', function (req, res, next) {
     `)
 });
 
-router.post('/6', async (req, res, next) => {
+router.post('/9', async (req, res, next) => {
   let { username } = req.body
   let filteredFields = Object.keys(req.body).filter(field => field !== "username").map(f => `'${f}'`);
 

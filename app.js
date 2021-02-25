@@ -5,7 +5,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var sixRouter = require('./routes/six');
+var nineRouter = require('./routes/nine');
 var adminRouter = require('./routes/admin');
 var todosRouter = require('./routes/todos');
 
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter)
 app.use('/admin', adminRouter)
-app.use('/api/6', sixRouter)
+app.use('/api/9', nineRouter)
 app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
 
