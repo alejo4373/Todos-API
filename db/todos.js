@@ -24,7 +24,9 @@ const getAllTodos = async (params) => {
 
   let todos;
   try {
+    console.log('about to call .any')
     todos = await db.any(SQL, params);
+    console.log('.any done')
     return todos;
   } catch (err) {
     throw err;
