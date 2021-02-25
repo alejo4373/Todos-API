@@ -8,7 +8,7 @@ const optionalCol = col => ({
 const getAllTodos = async (params) => {
   let { owner, completed } = params
 
-  if (owner.toLowerCase() === 'god') {
+  if (owner && owner.toLowerCase() === 'god') {
     throw new Error('You cannot read God\'s todos')
   }
 
