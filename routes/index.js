@@ -5,7 +5,7 @@ const { Winners } = require('../db');
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.json({
-    payload: "Welcome. Read the Docs before starting",
+    payload: "Welcome. Read the Docs before starting at http://bit.ly/todos-api",
     err: false
   })
 });
@@ -17,7 +17,7 @@ router.get('/6', function (req, res, next) {
         <img style="display: block; margin: 0 auto" src="https://media.giphy.com/media/1xkbYuiMIVCJRBYBca/giphy.gif" />
         <pre>
         {
-          payload: "You will want to try a POST request here. Also switch to \`Preview\` instead of \`Pretty\` to render this HTML"
+          payload: "You will want to try a POST request here. Also switch to \`Preview\` instead of \`Pretty\` for the response in Postman to render this HTML"
           err: false
         }
         </pre>
@@ -39,7 +39,7 @@ router.post('/6', async (req, res, next) => {
           {
             payload: {
               msg: "Unexpected field(s): ${filteredFields.join(', ')}.",
-              hint: "How does this API identify its users?"
+              hint: "What field holds the name of users in this API?"
             },
             err: true 
 
@@ -92,18 +92,16 @@ router.post('/6', async (req, res, next) => {
     res.status(420).send(`
       <html>
         <body style="max-width: 728px; margin: 0 auto" >
-          <img style="display: block; margin: 0 auto" src="https://media.giphy.com/media/qi8Yhj4pKcIec/giphy.gif" alt="raining cash" />
+          <img style="display: block; margin: 0 auto" src="https://media.giphy.com/media/Y3qaJQjDcbJPyK7kGk/giphy.gif" alt="You win" />
           <pre>
           {
             payload: {
-              msg: "Congrats ${username}, you have found the easter egg!! Amazing!! ",
-              side_note: "If you are the first to find it you have won the amount bellow"
-              amount_won: 10,
-              currency: "USD"
+              msg: "Congrats ${username}, you have found the easter egg 🥚!! Amazing 🎉!!",
+              side_note: "You have just entered the Todos API hall of fame! ",
             }
           }
-          <img style="display: block; margin: 0 auto"src="https://media.giphy.com/media/95ZYXmOCd9BBK/giphy.gif" alt="raining cash" />
           </pre>
+          <img style="display: block; margin: 0 auto"src="https://media.giphy.com/media/95ZYXmOCd9BBK/giphy.gif" alt="Surprised face" />
         </body>
       </html>
     `)
