@@ -4,9 +4,16 @@ let { Users, Helpers } = require('../db');
 
 router.post("/signup", async (req, res, next) => {
   const { username } = req.body;
-  if (!username) {
+  if (Object.keys(req.body).length > 1) {
+    return res.status(500).json({
+      payload: 'ERROR: The server did not expect more than one field in the body',
+      err: true
+    })
+  }
+
+  if (!username || !username.trim()) {
     return res.status(400).json({
-      payload: `Expected valid values for user [username]`,
+      payload: "Expected a `username` field  with a valid string in the body",
       err: true
     })
   }
