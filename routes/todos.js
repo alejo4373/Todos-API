@@ -135,7 +135,7 @@ router.put('/:id', async (req, res, next) => {
 
   try {
     const todo = await Todos.getTodo(id);
-    
+
     if (todo) { // Todo already exits, trying to update
       const updatedTodo = await Todos.updateTodo(id, todo_edits);
       if (!updatedTodo) {
@@ -155,21 +155,21 @@ router.put('/:id', async (req, res, next) => {
       const newTodo = await Todos.createTodo({
         id,
         ...todo_edits
-      });      
+      });
       return res.status(201).json({
         payload: newTodo,
         err: false
       })
     }
 
-   } catch (err) {
-      next(err)
-    }
+  } catch (err) {
+    next(err)
+  }
 });
 
 router.all('/', (req, res, next) => {
   res.status(405).json({
-    payload: "Nah, nah, nah",
+    payload: `Oops! ${req.method} method is is not allowed here`,
     err: true
   })
 })

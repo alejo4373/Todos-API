@@ -66,7 +66,7 @@ router.get('/:username', async (req, res, next) => {
 
 router.all('/', (req, res, next) => {
   res.status(405).json({
-    payload: "Nah, nah, nah",
+    payload: `Oops! ${req.method} method is is not allowed here`,
     err: true
   })
 })

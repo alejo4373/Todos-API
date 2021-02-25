@@ -25,7 +25,7 @@ app.use('/api/todos', todosRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404).json({
-    payload: "What you were looking for was not found or the endpoint or method you used is unhandled by the Server. Read the docs at http://bit.ly/todos-api",
+    payload: `What you were looking for was not found or the endpoint(${req.path}) or the method you used (${req.method}) is unhandled by the Server. Read the docs at http://bit.ly/todos-api`,
     err: true
   })
 });

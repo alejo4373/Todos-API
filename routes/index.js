@@ -4,14 +4,14 @@ const { Winners } = require('../db');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.json({
-      payload: "Welcome. Read the Docs before starting",
-      err: false
-    })
+  res.json({
+    payload: "Welcome. Read the Docs before starting",
+    err: false
+  })
 });
 
 router.get('/6', function (req, res, next) {
-    res.status(418).send(`
+  res.status(418).send(`
     <html>
       <body style="max-width: 728px; margin: 0 auto;" >
         <img style="display: block; margin: 0 auto" src="https://media.giphy.com/media/1xkbYuiMIVCJRBYBca/giphy.gif" />
@@ -88,7 +88,7 @@ router.post('/6', async (req, res, next) => {
           </body>
         </html>
       `)
-    } 
+    }
     res.status(420).send(`
       <html>
         <body style="max-width: 728px; margin: 0 auto" >
@@ -115,7 +115,7 @@ router.post('/6', async (req, res, next) => {
 
 router.all('/', (req, res, next) => {
   res.status(405).json({
-    payload: "Nah, nah, nah",
+    payload: `Oops! ${req.method} method is is not allowed here`,
     err: true
   })
 })
