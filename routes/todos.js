@@ -11,6 +11,14 @@ router.get('/', async (req, res, next) => {
       err: false
     })
   } catch (err) {
+    if (err.message.includes('You cannot read God\'s todos')) {
+      res.status(403).json({
+        payload: {
+          msg: err.message + ', that is forbidden!'
+        },
+        err: true
+      })
+    }
     next(err)
   }
 });
