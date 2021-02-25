@@ -76,22 +76,28 @@ directory. To create a Heroku app and automatically add a `heroku` remote to you
 
 ### Endpoints
 
+#### Admin
+
+| Method | Endpoint | Description               |
+| ------ | -------- | ------------------------- |
+| `GET`  | `/admin` | Only admins can come here |
+
 #### Users
-| Method | Endpoint                 | 
-|--------|--------------------------|
-| `GET`  | `/users`                 |
-| `GET`  | `/users/<user-username>` |
-| `POST` | `/users/signup`          |
+| Method | Endpoint                     |
+| ------ | ---------------------------- |
+| `GET`  | `/api/users`                 |
+| `GET`  | `/api/users/<user-username>` |
+| `POST` | `/api/users/signup`          |
 
 #### Todos
-| Method   | Endpoint           | Possible Query Params |
-|----------|--------------------|-----------------------|
-| `GET`    | `/todos`           | `owner=<username>`, `completed=<true\|false>`
-| `POST`   | `/todos`           ||
-| `GET`    | `/todos/<todo-id>` ||
-| `PUT`    | `/todos/<todo-id>` ||
-| `PATCH`  | `/todos/<todo-id>` ||
-| `DELETE` | `/todos/<todo-id>` ||
+| Method   | Endpoint               | Possible Query Params                         |
+| -------- | ---------------------- | --------------------------------------------- |
+| `GET`    | `/api/todos`           | `owner=<username>`, `completed=<true\|false>` |
+| `POST`   | `/api/todos`           |                                               |
+| `GET`    | `/api/todos/<todo-id>` |                                               |
+| `PUT`    | `/api/todos/<todo-id>` |                                               |
+| `PATCH`  | `/api/todos/<todo-id>` |                                               |
+| `DELETE` | `/api/todos/<todo-id>` |                                               |
 
 ### Final notes
 1. The exercise asks of the fellows/students to find how many http status codes they can find by using this api. Later on I make a poll on Slack and ask how many they have found and revealing how many there are by saying: `There are /6 status codes. How many have you found?`. What appears to be a typo `/6` should lead them to the easter egg endpoint that is mentioned in the exercise instructions.

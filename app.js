@@ -6,6 +6,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var sixRouter = require('./routes/six');
+var adminRouter = require('./routes/admin');
 var todosRouter = require('./routes/todos');
 
 var app = express();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter)
+app.use('/admin', adminRouter)
 app.use('/api/6', sixRouter)
 app.use('/api/users', usersRouter);
 app.use('/api/todos', todosRouter);
