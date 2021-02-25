@@ -11,6 +11,7 @@ router.get('/', async (req, res, next) => {
       err: false
     })
   } catch (err) {
+    console.log(err)
     if (err.message.includes('You cannot read God\'s todos')) {
       return res.status(403).json({
         payload: {
