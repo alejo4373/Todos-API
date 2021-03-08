@@ -1,17 +1,17 @@
 const uuidv1 = require('uuid/v1')
 
-let missingProps = (expected, actual) => {
-  let missing = [];
-  for (let key of expected) {
-    if (!actual[key]) {
+const missingProps = (expected, actual) => {
+  const missing = [];
+  for (const key of expected) {
+    if (!actual.hasOwnProperty(key)) {
       missing.push(key)
     }
   }
   return missing;
 }
 
-let genId = () => {
-  let id = uuidv1();
+const genId = () => {
+  const id = uuidv1();
   return id.split('-')[0];
 }
 
