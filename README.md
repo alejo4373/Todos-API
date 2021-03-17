@@ -2,7 +2,7 @@
 
 This Server/API is intended to be used by the fellows to practice making network requests, learn about HTTP status codes, their uses and differences, learn about query parameters and body data sent to appropriate endpoints. 
 
-## Root Endpoint https://alejos-todos-api.herokuapp.com
+## Root Endpoint http://www.todos-api.com
 
 ## API Endpoints
 
